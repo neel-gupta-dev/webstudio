@@ -11,11 +11,30 @@ export default function ContactSection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate submission
+     // Simulate submission
     await new Promise(resolve => setTimeout(resolve, 2000));
     setIsSubmitting(false);
     setFormState({ name: '', email: '', message: '' });
     alert('Message sent!');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formState),
+      });
+
+      if (response.ok) {
+        setFormState({ name: '', email: '', message: '' });
+        alert('Message sent successfully!');
+      } else {
+        alert('Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      alert('An error occurred. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

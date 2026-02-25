@@ -8,7 +8,8 @@ import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
+  { name: 'About', href: '/#about' },
+  { name: 'Tech Stack', href: '/#tech-stack' },
   { name: 'Services', href: '/#services' },
   { name: 'Blog', href: 'https://devanvil.pages.dev/' },
   { name: 'Contact', href: '/#contact' },
@@ -45,6 +46,8 @@ export default function Navbar() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             if (entry.target.id === 'home') setActiveSection('/');
+            if (entry.target.id === 'about') setActiveSection('/#about');
+            if (entry.target.id === 'tech-stack') setActiveSection('/#tech-stack');
             if (entry.target.id === 'services') setActiveSection('/#services');
             if (entry.target.id === 'contact') setActiveSection('/#contact');
           }
@@ -53,10 +56,14 @@ export default function Navbar() {
 
       const observer = new IntersectionObserver(handleIntersect, observerOptions);
       const homeSection = document.getElementById('home');
+      const aboutSection = document.getElementById('about');
+      const techStackSection = document.getElementById('tech-stack');
       const servicesSection = document.getElementById('services');
       const contactSection = document.getElementById('contact');
 
       if (homeSection) observer.observe(homeSection);
+      if (aboutSection) observer.observe(aboutSection);
+      if (techStackSection) observer.observe(techStackSection);
       if (servicesSection) observer.observe(servicesSection);
       if (contactSection) observer.observe(contactSection);
 
@@ -101,7 +108,7 @@ export default function Navbar() {
                     {isActive && (
                       <motion.div
                         layoutId="navbar-active"
-                        className="absolute inset-0 bg-blue-100 rounded-full -z-0"
+                        className="absolute inset-0 bg-blue-100 rounded-full -z-10"
                         transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                       />
                     )}
@@ -140,10 +147,9 @@ export default function Navbar() {
                     key={link.name}
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`block px-3 py-2 rounded-md text-base font-medium ${
-                      isActive
-                        ? 'bg-blue-100 text-blue-600'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-blue-600'
+                    className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                      isActive ? 'bg-blue-100 text-blue-600'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-blue-600'
                     }`}
                   >
                     {link.name}
