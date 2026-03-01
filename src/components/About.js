@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { fadeInLeft, fadeInRight, fadeInUp } from './framer';
 import { CheckCircle, Code, Zap, Globe, ArrowRight } from 'lucide-react';
 
 const features = [
@@ -16,11 +17,11 @@ export default function About() {
       <div className="container px-4 md:px-6 mx-auto">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           {/* Text Content */}
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+          <motion.div
+            variants={fadeInLeft}
+            initial="initial"
+            whileInView="animate"
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
             className="space-y-8"
           >
             <div className="space-y-4">
@@ -59,11 +60,11 @@ export default function About() {
           </motion.div>
 
           {/* Visual Content */}
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+          <motion.div
+            variants={fadeInRight}
+            initial="initial"
+            whileInView="animate"
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
             className="relative lg:order-last"
           >
             {/* Abstract Background Blob */}
@@ -84,10 +85,11 @@ export default function About() {
             </div>
 
             {/* Floating Stats Card */}
-            <motion.div 
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
+            <motion.div
+              variants={fadeInUp}
+              initial="initial"
+              whileInView="animate"
+              transition={{ delay: 0.4 }}
               className="absolute -bottom-6 -left-6 md:bottom-8 md:-left-8 bg-white p-6 rounded-xl shadow-xl border border-gray-50 max-w-xs"
             >
               <div className="flex items-center space-x-4">

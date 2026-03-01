@@ -1,9 +1,13 @@
+'use client';
+
+import { motion } from "framer-motion";
 import Link from "next/link";
 import GridBackground from "../components/GridBackground";
 import MobileBackground from "../components/MobileBackground";
 import ContactSection from "../components/ContactSection";
 import About from "../components/About";
 import TechStack from "../components/TechStack";
+import { fadeInUp, staggerContainer } from "../components/framer";
 
 const services = [
   {
@@ -26,7 +30,7 @@ const services = [
   },
   {
     title: "Custom Web App",
-    price: "₹80,000+",
+    price: "₹80,000",
     description: "Tailored solutions for complex business needs.",
     features: ["Custom Functionality", "API Integration", "Scalable Architecture", "Premium Support"],
   },
@@ -34,9 +38,10 @@ const services = [
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen">
+    <div className="relative">
+      {/* For SEO, ensure that components like <About />, <TechStack />, and <ContactSection /> are wrapped in <section> tags with appropriate aria-labels and headings. */}
       {/* Hero Section */}
-      <div id="home" className="relative flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section id="home" aria-labelledby="hero-heading" className="relative flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Backgrounds */}
         <div className="absolute inset-0 w-full h-full z-0">
           <div className="hidden md:block w-full h-full">
@@ -46,8 +51,13 @@ export default function Home() {
             <MobileBackground />
           </div>
         </div>
-        <div className="relative z-10 text-center max-w-3xl mx-auto">
-          <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
+        <motion.div 
+          className="relative z-10 text-center max-w-3xl mx-auto"
+          initial="initial"
+          animate="animate"
+          variants={fadeInUp}
+        >
+          <h1 id="hero-heading" className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
             <span className="block">Welcome to</span>
             <span className="block text-blue-600">WebStudio</span>
           </h1>
@@ -73,8 +83,8 @@ export default function Home() {
               </Link>
             </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </section>
 
       {/* About Section */}
       <About />
@@ -83,9 +93,9 @@ export default function Home() {
       <TechStack />
 
       {/* Services Section */}
-      <div id="services" className="relative z-10 py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section id="services" aria-labelledby="services-heading" className="relative z-10 py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+          <h2 id="services-heading" className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
             Our Services
           </h2>
           <p className="mt-4 text-xl text-gray-600">
@@ -93,9 +103,19 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+        >
           {services.map((service, index) => (
-            <div key={index} className="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-gray-100 hover:transform hover:scale-105 transition-all duration-300 flex flex-col">
+            <motion.div 
+              key={index} 
+              variants={fadeInUp}
+              className="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-gray-100 hover:transform hover:scale-105 transition-all duration-300 flex flex-col"
+            >
               <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
               <div className="text-3xl font-bold text-blue-600 mb-4">{service.price}</div>
               <p className="text-gray-600 mb-6 text-sm flex-grow">{service.description}</p>
@@ -109,13 +129,13 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full py-2 px-4 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors font-medium">
-                Choose Plan
-              </button>
-            </div>
+              <Link href={`/#contact?plan=${service.title.toLowerCase().replace(/ /g, '-')}`} className="w-full text-center py-2 px-4 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors font-medium">
+                  Choose Plan
+              </Link>
+            </motion.div>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </section>
 
       {/* Contact Section */}
       <ContactSection />

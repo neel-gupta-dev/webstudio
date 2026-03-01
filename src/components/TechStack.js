@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Code, Database, Layout, Server } from 'lucide-react';
+import { fadeInUp, staggerContainer } from './framer';
 import GridBackground from './GridBackground';
 
 const technologies = [
@@ -21,8 +22,8 @@ const technologies = [
     items: [
       { name: "Node.js", logo: "https://cdn.simpleicons.org/nodedotjs" },
       { name: "Express", logo: "https://cdn.simpleicons.org/express" },
-      { name: "Python", logo: "https://cdn.simpleicons.org/python" },
-      { name: "Go", logo: "https://cdn.simpleicons.org/go" }
+      // { name: "Python", logo: "https://cdn.simpleicons.org/python" },
+      { name: "PHP", logo: "https://cdn.simpleicons.org/php" }
     ]
   },
   {
@@ -31,7 +32,7 @@ const technologies = [
     items: [
       { name: "PostgreSQL", logo: "https://cdn.simpleicons.org/postgresql" },
       { name: "MongoDB", logo: "https://cdn.simpleicons.org/mongodb" },
-      { name: "Redis", logo: "https://cdn.simpleicons.org/redis" },
+      // { name: "Redis", logo: "https://cdn.simpleicons.org/redis" },
       { name: "Supabase", logo: "https://cdn.simpleicons.org/supabase" }
     ]
   },
@@ -51,7 +52,7 @@ export default function TechStack() {
   return (
     <section id="tech-stack" className="relative py-20 bg-gray-50 overflow-hidden">
       <div className="absolute inset-0">
-        <GridBackground />
+        <GridBackground magnification={false} />
       </div>
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
@@ -82,7 +83,7 @@ export default function TechStack() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="p-6 bg-gray-50 rounded-2xl border border-gray-100 hover:shadow-lg transition-all duration-300"
+              className="p-6 bg-gray-50 rounded-2xl border border-gray-200 hover:shadow-lg transition-all duration-300"
             >
               <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-4">
                 <tech.icon size={24} />

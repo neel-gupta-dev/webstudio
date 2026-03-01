@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 
-export default function GridBackground() {
+export default function GridBackground({ magnification = true }) {
   const canvasRef = useRef(null);
   const mousePosition = useRef({ x: -1000, y: -1000 });
   const smoothedMouse = useRef({ x: -1000, y: -1000 });
@@ -28,7 +28,9 @@ export default function GridBackground() {
       };
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    if (magnification) {
+      window.addEventListener('mousemove', handleMouseMove);
+    }
 
     // Configuration
     const gridSize = 40;
@@ -112,10 +114,12 @@ export default function GridBackground() {
 
     return () => {
       window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', handleMouseMove);
+      if (magnification) {
+        window.removeEventListener('mousemove', handleMouseMove);
+      }
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [magnification]);
 
   return (
     <canvas

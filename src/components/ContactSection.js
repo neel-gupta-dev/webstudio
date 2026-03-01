@@ -1,31 +1,40 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { fadeInUp, fadeInLeft, fadeInRight } from './framer';
 import { Send, Mail, MapPin, Phone } from 'lucide-react';
 import { useState } from 'react';
 
 export default function ContactSection() {
-  const [formState, setFormState] = useState({ name: '', email: '', message: '' });
+  const [formState, setFormState] = useState({ 
+    name: '', 
+    email: '', 
+    message: '',
+    _subject: 'New Inquiry from WebStudio'
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-     // Simulate submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsSubmitting(false);
-    setFormState({ name: '', email: '', message: '' });
-    alert('Message sent!');
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('https://formsubmit.co/ajax/neelgupta30@zohomail.in', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify(formState),
       });
 
       if (response.ok) {
-        setFormState({ name: '', email: '', message: '' });
+        setFormState({ 
+          name: '', 
+          email: '', 
+          message: '',
+          _subject: 'New Inquiry from WebStudio'
+        });
         alert('Message sent successfully!');
       } else {
         alert('Failed to send message. Please try again.');
@@ -60,11 +69,11 @@ export default function ContactSection() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+        <motion.div 
+          variants={fadeInUp}
+          initial="initial"
+          whileInView="animate"
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-extrabold text-gray-900 sm:text-5xl">
@@ -77,11 +86,11 @@ export default function ContactSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+          <motion.div 
+            variants={fadeInLeft}
+            initial="initial"
+            whileInView="animate"
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-8"
           >
             <div className="flex items-start space-x-4">
@@ -125,19 +134,21 @@ export default function ContactSection() {
           </motion.div>
 
           {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+          <motion.div 
+            variants={fadeInRight}
+            initial="initial"
+            whileInView="animate"
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
             className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 relative overflow-hidden"
           >
             <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-                <input
+                <motion.input
+                  whileFocus={{ scale: 1.02, boxShadow: "0 0 0 2px rgba(59, 130, 246, 0.4)" }}
                   type="text"
                   id="name"
+                  name="name"
                   required
                   className="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
                   placeholder="John Doe"
@@ -147,9 +158,11 @@ export default function ContactSection() {
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                <input
+                <motion.input
+                  whileFocus={{ scale: 1.02, boxShadow: "0 0 0 2px rgba(59, 130, 246, 0.4)" }}
                   type="email"
                   id="email"
+                  name="email"
                   required
                   className="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
                   placeholder="john@example.com"
@@ -159,8 +172,10 @@ export default function ContactSection() {
               </div>
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
-                <textarea
+                <motion.textarea
+                  whileFocus={{ scale: 1.02, boxShadow: "0 0 0 2px rgba(59, 130, 246, 0.4)" }}
                   id="message"
+                  name="message"
                   rows={4}
                   required
                   className="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none resize-none"
